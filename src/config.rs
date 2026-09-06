@@ -1,4 +1,3 @@
-
 use crate::move_engine::PieceType;
 
 #[derive(Clone, Copy, Debug)]

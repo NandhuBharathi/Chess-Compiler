@@ -1,4 +1,3 @@
-
 use crate::move_engine::ChessMove;
 
 pub fn parse_move(input: &str) -> Option<ChessMove> {
@@ -23,13 +22,9 @@ pub fn parse_move(input: &str) -> Option<ChessMove> {
         return None;
     }
 
-    let from =
-        ((from_rank - b'1') as usize * 8)
-            + (from_file - b'a') as usize;
+    let from = ((from_rank - b'1') as usize * 8) + (from_file - b'a') as usize;
 
-    let to =
-        ((to_rank - b'1') as usize * 8)
-            + (to_file - b'a') as usize;
+    let to = ((to_rank - b'1') as usize * 8) + (to_file - b'a') as usize;
 
     Some(ChessMove::new(from, to))
 }

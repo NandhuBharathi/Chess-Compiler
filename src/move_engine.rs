@@ -1,4 +1,3 @@
-
 #[derive(Clone, Copy, Debug)]
 pub struct ChessMove {
     pub from: usize,
@@ -27,12 +26,7 @@ pub enum Color {
     Black,
 }
 
-pub fn is_legal_move(
-    piece: PieceType,
-    color: Color,
-    from: usize,
-    to: usize,
-) -> bool {
+pub fn is_legal_move(piece: PieceType, color: Color, from: usize, to: usize) -> bool {
     if from >= 64 || to >= 64 || from == to {
         return false;
     }
@@ -49,43 +43,25 @@ pub fn is_legal_move(
     match piece {
         PieceType::Pawn => {
             if color == Color::White {
-                dx == 0
-                    && (to_rank - from_rank == 1
-                        || (from_rank == 1 && to_rank == 3))
+                dx == 0 && (to_rank - from_rank == 1 || (from_rank == 1 && to_rank == 3))
             } else {
-                dx == 0
-                    && (from_rank - to_rank == 1
-                        || (from_rank == 6 && to_rank == 4))
+                dx == 0 && (from_rank - to_rank == 1 || (from_rank == 6 && to_rank == 4))
             }
         }
 
-        PieceType::Knight => {
-            (dx == 1 && dy == 2) || (dx == 2 && dy == 1)
-        }
+        PieceType::Knight => (dx == 1 && dy == 2) || (dx == 2 && dy == 1),
 
-        PieceType::Bishop => {
-            dx == dy
-        }
+        PieceType::Bishop => dx == dy,
 
-        PieceType::Rook => {
-            dx == 0 || dy == 0
-        }
+        PieceType::Rook => dx == 0 || dy == 0,
 
-        PieceType::Queen => {
-            dx == dy || dx == 0 || dy == 0
-        }
+        PieceType::Queen => dx == dy || dx == 0 || dy == 0,
 
-        PieceType::King => {
-            dx <= 1 && dy <= 1
-        }
+        PieceType::King => dx <= 1 && dy <= 1,
     }
 }
 
-pub fn path_is_clear(
-    squares: &[Option<(Color, PieceType)>; 64],
-    from: usize,
-    to: usize,
-) -> bool {
+pub fn path_is_clear(squares: &[Option<(Color, PieceType)>; 64], from: usize, to: usize) -> bool {
     let from_file = (from % 8) as i32;
     let from_rank = (from / 8) as i32;
 
