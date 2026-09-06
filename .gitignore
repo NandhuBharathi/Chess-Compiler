@@ -1,0 +1,39 @@
+
+# Rust
+/target/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*~
+
+# Kaggle / Notebook
+*.ipynb_checkpoints/
+
+# Environment / Secrets
+.env
+.env.*
+!.env.example
+
+# Database / State
+*.db
+*.sqlite
+*.sqlite3
+
+# Local binaries
+*.exe
+*.dll
+*.so
+*.dylib
