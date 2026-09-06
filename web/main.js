@@ -98,11 +98,16 @@ function capitalize(text) {
 }
 
 async function start() {
-    await init();
+    try {
+        await init();
 
-    compiler = new ChessCompiler();
+        compiler = new ChessCompiler();
 
-    drawBoard();
+        drawBoard();
+    } catch (error) {
+        console.error(error);
+        status.textContent = "WASM ERROR: " + error.message;
+    }
 }
 
 start();
