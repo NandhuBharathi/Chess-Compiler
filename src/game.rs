@@ -21,7 +21,11 @@ pub struct Game {
     pub white_time: Duration,
     pub black_time: Duration,
 
+    #[cfg(not(target_arch = "wasm32"))]
     turn_started: Instant,
+
+    #[cfg(target_arch = "wasm32")]
+    turn_started: (),
 
     white_king_moved: bool,
     black_king_moved: bool,
@@ -57,7 +61,11 @@ impl Game {
             white_time: initial_time,
             black_time: initial_time,
 
+            #[cfg(not(target_arch = "wasm32"))]
             turn_started: Instant::now(),
+
+            #[cfg(target_arch = "wasm32")]
+            turn_started: (),
 
             white_king_moved: false,
             black_king_moved: false,
@@ -76,6 +84,7 @@ impl Game {
         game
     }
 
+    #[cfg(not(target_arch = "wasm32"))]
     fn update_clock(&mut self) -> bool {
         if !self.config.time_limit_enabled {
             return true;
@@ -90,17 +99,21 @@ impl Game {
 
         if elapsed >= *remaining {
             *remaining = Duration::ZERO;
-
-            println!("Compiler: {:?} TIME OUT!", self.turn);
-
             self.game_over = true;
-
             return false;
         }
 
         *remaining -= elapsed;
-        self.turn_started = Instant::now();
+        #[cfg(not(target_arch = "wasm32"))]
+        {
+            self.turn_started = Instant::now();
+        }
 
+        true
+    }
+
+    #[cfg(target_arch = "wasm32")]
+    fn update_clock(&mut self) -> bool {
         true
     }
 
@@ -590,7 +603,10 @@ impl Game {
 
         println!("Halfmove Clock: {} / 100", self.halfmove_clock());
 
-        self.turn_started = Instant::now();
+        #[cfg(not(target_arch = "wasm32"))]
+        {
+            self.turn_started = Instant::now();
+        }
 
         self.turn = opposite_color(self.turn);
 
